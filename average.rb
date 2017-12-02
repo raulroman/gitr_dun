@@ -18,7 +18,7 @@ def average(array)
   sum = 0
   index = 0 
 
-  array.each do |number|
+  array.each do |index|
     sum = sum + array[index] 
     index = index + 1
   end
