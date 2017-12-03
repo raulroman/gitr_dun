@@ -3,11 +3,34 @@ require "unirest"
 p "Top Fantasy Football Articles"
 
 
-response = Unirest.get("https://www.reddit.com/r/Fantasy_Football/.json")
+article_response = Unirest.get("https://www.reddit.com/r/Fantasy_Football/.json")
 
-p articles = response.body["data"]["children"]
+articles = article_response.body["data"]["children"]
 
-articles = 
+i = 0
+articles.length.times do
+  p "#{i}. #{articles[i]['data']['title']}"
+  i += 1
+
+end
+
+p "Choose an article"
+index_of_article = gets.chomp.to_i
+
+comments_link = articles[index_of_article]['data']['permalink']
 
 
-[0]["data"]["title"]
+comments_response = Unirest.get("https://www.reddit.com#{comments_link}.json")
+
+comments = comments_response.body[1]['data']['children'][0]['data']['replies']['data']['children'][0]['data']['replies']['data']['children']
+
+comments.each do |comment|
+  p comment['data']['body']
+end
+
+
+
+
+
+
+
